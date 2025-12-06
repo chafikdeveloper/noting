@@ -81,7 +81,7 @@ onBeforeUnmount(() => document.removeEventListener("click", handleClickOutside))
       <nav class="hidden lg:flex items-center gap-4 relative">
         <ul class="flex items-center gap-4">
           <li class="font-bold text-md text-black hover:text-blue-900 cursor-pointer">
-            <Link :href="route('create-note')">Notes</Link>
+            <Link :href="route('home')">Notes</Link>
           </li>
           <li class="font-bold text-md text-black hover:text-blue-900 cursor-pointer">
             <Link :href="route('category.index')">Categories</Link>
@@ -104,7 +104,8 @@ onBeforeUnmount(() => document.removeEventListener("click", handleClickOutside))
             class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2 z-50 border border-gray-300"
           >
             <Link :href="route('profile')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</Link>
-            <Link class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</Link>
+            <Link :href="route('note.create')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Create note</Link>
+            <!-- <Link class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</Link> -->
             <Link :href="route('logout')" method="POST" class="block px-4 py-2 text-sm text-red-500 hover:bg-red-50 w-full text-left">Logout</Link>
           </div>
         </div>
@@ -119,7 +120,7 @@ onBeforeUnmount(() => document.removeEventListener("click", handleClickOutside))
     >
       <ul class="flex flex-col gap-4">
         <li class="font-bold text-md text-black">
-          <Link :href="route('create-note')">Notes</Link>
+          <Link :href="route('home')">Notes</Link>
         </li>
         <li class="font-bold text-md text-black">
           <Link :href="route('category.index')">Categories</Link>

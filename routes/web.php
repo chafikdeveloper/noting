@@ -2,26 +2,34 @@
 
 use App\Http\Controllers\authController;
 use App\Http\Controllers\categroyController;
+use App\Http\Controllers\noteController;
 use App\Http\Controllers\profileController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function() {
-    Route::get('/', function () {
-        return inertia('home');
-    })->name('home');
-
     Route::prefix('/categories')->controller(categroyController::class)->group(function() {
         Route::get('/', 'index')->name('category.index');
         Route::get('/create', 'create')->name('category.create');        
         Route::post('/create', 'post');
-        Route::get('/update/${category}', 'edit')->name('category.update');
-        Route::patch('/update/${category}', 'update');
+        Route::get('/edit/${category}', 'edit')->name('category.update');
+        Route::patch('/edit/${category}', 'update');
         Route::delete('/category/${category}', 'delete')->name('category.delete');
     });
     
-    Route::get('/create-note', function () {
-        return inertia('create-note');
-    })->name('create-note');
+    Route::controller(noteController::class)->group(function() {
+        Route::get('/', 'index')->name('home');
+
+        Route::prefix('/notes')->group(function() {
+            Route::get('/${note}', 'show')->name('note.show');
+            Route::get('/create', 'create')->name('note.create');
+            Route::post('/create', 'post');
+
+            Route::get('/edit/${note}', 'edit')->name('note.edit');
+            Route::patch('/edit/${note}', 'update');
+
+            Route::delete('/delete/${note}', 'delete')->name('note.delete');
+        });
+    });
 
     Route::prefix('profile')->controller(profileController::class)->group(function() {
         Route::get('/', 'index')->name('profile');

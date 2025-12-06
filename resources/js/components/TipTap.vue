@@ -2,8 +2,6 @@
 import { useEditor, EditorContent } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
 
-import { BulletList, ListItem, OrderedList } from "@tiptap/extension-list";
-
 import {
     Bold,
     Italic,
@@ -23,12 +21,21 @@ import {
     Link,
 } from "lucide-vue-next";
 
+const props = defineProps({
+    modelValue: String
+})
+
+const emit = defineEmits(['update:modelValue'])
+
 const editor = useEditor({
-    content: "<p>I'm running Tiptap with Vue.js. 🎉</p>",
+    content: props.modelValue,
+    onUpdate: ({editor}) => {
+        emit('update:modelValue', editor.getHTML())
+    },
     extensions: [StarterKit],
     editorProps: {
         attributes: {
-            class: "min-h-48 max-h-64 p-4 overflow-y-auto prose outline-none",
+            class: "min-h-48 max-h-64 p-4 overflow-y-auto prose outline-none max-w-7xl",
         },
     },
 });
@@ -61,7 +68,7 @@ const setLink = () => {
         <section
             class="flex items-center flex-wrap gap-x-3 p-2 border-b border-gray-400"
         >
-            <button
+            <button type="button"
                 class="p-1 rounded-md"
                 @click="editor.chain().focus().toggleBold().run()"
                 :disabled="!editor?.can().chain().focus().toggleBold().run()"
@@ -69,7 +76,7 @@ const setLink = () => {
             >
                 <Bold size="18" />
             </button>
-            <button
+            <button type="button"
                 class="p-1 rounded-md"
                 @click="editor.chain().focus().toggleItalic().run()"
                 :disabled="!editor?.can().chain().focus().toggleItalic().run()"
@@ -77,7 +84,7 @@ const setLink = () => {
             >
                 <Italic size="18" />
             </button>
-            <button
+            <button type="button"
                 class="p-1 rounded-md"
                 @click="editor.chain().focus().toggleStrike().run()"
                 :disabled="!editor?.can().chain().focus().toggleStrike().run()"
@@ -85,7 +92,7 @@ const setLink = () => {
             >
                 <strikethrough size="18" />
             </button>
-            <button
+            <button type="button"
                 class="p-1 rounded-md"
                 @click="editor.chain().focus().toggleUnderline().run()"
                 :disabled="
@@ -95,20 +102,20 @@ const setLink = () => {
             >
                 <underline size="18" />
             </button>
-            <button
+            <button type="button"
                 @click="setLink"
                 :class="{ 'bg-gray-300': editor?.isActive('link') }"
             >
                 <Link size="18" />
             </button>
-            <button
+            <button type="button"
                 class="p-1 rounded-md"
                 @click="editor.chain().focus().setParagraph().run()"
                 :class="{ 'bg-gray-300': editor?.isActive('paragraph') }"
             >
                 <pilcrow size="18" />
             </button>
-            <button
+            <button type="button"
                 class="p-1 rounded-md"
                 @click="
                     editor.chain().focus().toggleHeading({ level: 1 }).run()
@@ -119,7 +126,7 @@ const setLink = () => {
             >
                 <Heading1 size="18" />
             </button>
-            <button
+            <button type="button"
                 class="p-1 rounded-md"
                 @click="
                     editor.chain().focus().toggleHeading({ level: 2 }).run()
@@ -130,7 +137,7 @@ const setLink = () => {
             >
                 <heading2 size="18" />
             </button>
-            <button
+            <button type="button"
                 class="p-1 rounded-md"
                 @click="
                     editor.chain().focus().toggleHeading({ level: 3 }).run()
@@ -141,7 +148,7 @@ const setLink = () => {
             >
                 <heading3 size="18" />
             </button>
-            <button
+            <button type="button"
                 class="p-1 rounded-md"
                 @click="
                     editor.chain().focus().toggleHeading({ level: 4 }).run()
@@ -152,7 +159,7 @@ const setLink = () => {
             >
                 <heading4 size="18" />
             </button>
-            <button
+            <button type="button"
                 class="p-1 rounded-md"
                 @click="
                     editor.chain().focus().toggleHeading({ level: 5 }).run()
@@ -163,7 +170,7 @@ const setLink = () => {
             >
                 <heading5 size="18" />
             </button>
-            <button
+            <button type="button"
                 class="p-1 rounded-md"
                 @click="
                     editor.chain().focus().toggleHeading({ level: 6 }).run()
@@ -174,28 +181,28 @@ const setLink = () => {
             >
                 <heading6 size="18" />
             </button>
-            <button
+            <button type="button"
                 class="p-1 rounded-md"
                 @click="editor.chain().focus().toggleBulletList().run()"
                 :class="{ 'bg-gray-300': editor?.isActive('bulletList') }"
             >
                 <list size="18" />
             </button>
-            <button
+            <button type="button"
                 class="p-1 rounded-md"
                 @click="editor.chain().focus().toggleOrderedList().run()"
                 :class="{ 'bg-gray-300': editor?.isActive('orderedList') }"
             >
                 <listOrdered size="18" />
             </button>
-            <button
+            <button type="button"
                 class="p-1 rounded-md disabled:text-gray-400"
                 @click="editor.chain().focus().undo().run()"
                 :disabled="!editor?.can().chain().focus().undo().run()"
             >
                 <Undo size="18" />
             </button>
-            <button
+            <button type="button"
                 class="p-1 rounded-md disabled:text-gray-400"
                 @click="editor.chain().focus().redo().run()"
                 :disabled="!editor?.can().chain().focus().redo().run()"
