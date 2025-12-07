@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class categroyController extends Controller
 {
@@ -29,10 +30,12 @@ class categroyController extends Controller
     }
 
     public function edit(Category $category) {
+        Gate::authorize('view', $category);
         return inertia('category/edit', compact('category'));
     }
 
     public function update(Category $category) {
+        Gate::authorize('update', $category);
         $validated = request()->validate([
             'name' => ['required', 'string', 'max:25', 'min:3']
         ]);
@@ -51,6 +54,7 @@ class categroyController extends Controller
     }
 
     public function delete(Category $category) {
+        Gate::authorize('delete', $category);
         $category->delete();
 
         return redirect()->back();
